@@ -1,4 +1,6 @@
-React JWT Redux Router
+Redux form validation
 =======================
 
-Check [Starter kit](https://github.com/davezuko/react-redux-starter-kit/) for npm instructions 
+* All forms uses the same actions and reducer functions!
+
+Check [Starter kit](https://github.com/davezuko/react-redux-starter-kit/) for npm instructions
