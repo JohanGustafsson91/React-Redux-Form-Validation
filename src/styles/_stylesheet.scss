@@ -1,0 +1,380 @@
+/**
+* Guide to use/learn sass:
+* http://sass-lang.com/guide
+*/
+/* Page loading overlay */
+.page-loading-wrapper {
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  padding-top: 20%;
+}
+/* Loading cube for page loading
+https://github.com/tobiasahlin/SpinKit
+*/
+.sk-folding-cube {
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 40%;
+  left: calc(50% - 20px);
+  -webkit-transform: rotateZ(45deg);
+  transform: rotateZ(45deg);
+}
+.sk-folding-cube .sk-cube {
+  float: left;
+  width: 50%;
+  height: 50%;
+  position: relative;
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.sk-folding-cube .sk-cube:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #69CD95;
+  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+  animation: sk-foldCubeAngle 2.4s infinite linear both;
+  -webkit-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+}
+.sk-folding-cube .sk-cube2 {
+  -webkit-transform: scale(1.1) rotateZ(90deg);
+  transform: scale(1.1) rotateZ(90deg);
+}
+.sk-folding-cube .sk-cube3 {
+  -webkit-transform: scale(1.1) rotateZ(180deg);
+  transform: scale(1.1) rotateZ(180deg);
+}
+.sk-folding-cube .sk-cube4 {
+  -webkit-transform: scale(1.1) rotateZ(270deg);
+  transform: scale(1.1) rotateZ(270deg);
+}
+.sk-folding-cube .sk-cube2:before {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+.sk-folding-cube .sk-cube3:before {
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+.sk-folding-cube .sk-cube4:before {
+  -webkit-animation-delay: 0.9s;
+  animation-delay: 0.9s;
+}
+@-webkit-keyframes sk-foldCubeAngle {
+  0%,
+  10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  }
+  25%,
+  75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+    transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  }
+  90%,
+  100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+    transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
+}
+@keyframes sk-foldCubeAngle {
+  0%,
+  10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  }
+  25%,
+  75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+    transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  }
+  90%,
+  100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+    transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
+}
+
+.solid-form-label {
+  padding-top: 20px;
+}
+
+
+body {
+  background-color: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  margin-bottom: 100px;
+}
+.main-content {
+  padding-top: 120px;
+  padding-left: 270px;
+  padding-right: 30px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #b379b4;
+  font-weight: 300;
+}
+h1 {
+  font-size: 58px;
+  padding-bottom: 10px;
+  font-weight: 100;
+}
+h2 {
+  padding-bottom: 18px;
+}
+h3 {
+  padding-bottom: 16px;
+}
+.sub-title {
+  font-size: 20px;
+}
+.clear {
+  clear: both;
+}
+/* Style for bootstrap tables to make the rows more condensed */
+.table.condensed {
+  font-size: 13px;
+}
+.table.condensed th,
+.table.condensed td {
+  padding: 5px 10px !important;
+}
+/* Checkbox */
+.solid-checkbox {
+  display: inline-block;
+  height: 40px;
+  padding-top: 7px;
+  cursor: pointer;
+  clear: both;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE/Edge */
+  user-select: none;
+}
+.solid-checkbox .checkbox-base {
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+  background-color: #e5e5e5;
+  display: inline-block;
+  float: left;
+}
+.solid-checkbox .text {
+  line-height: 20px;
+  margin: 3px 0 0 10px;
+  display: block;
+  float: left;
+}
+.solid-checkbox .checkbox-filled {
+  margin: 5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 2px;
+  background-color: #32bb76;
+}
+/* Buttons */
+.solid-btn {
+  border: 0;
+  line-height: 20px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  margin: 10px 6px 10px 0;
+  outline: none;
+  border-radius: 3px;
+  height: 40px;
+}
+.solid-btn.small {
+  height: 30px;
+  font-size: 13px;
+  padding: 6px 8px;
+}
+.solid-btn .textmargin {
+  margin-right: 10px;
+}
+.solid-btn.small .textmargin {
+  margin-right: 5px;
+}
+.solid-btn.square {
+  width: 40px;
+  text-align: center;
+}
+.solid-btn i {
+  font-size: 16px;
+  margin: 2px;
+}
+.solid-btn.small i {
+  font-size: 14px;
+}
+.solid-btn.loading {
+  opacity: 0.5;
+}
+.solid-btn.grey {
+  background-color: #bababa;
+}
+.solid-btn.grey:hover {
+  background-color: #B1B1B1;
+}
+.solid-btn.blue {
+  background-color: #3299bb;
+}
+.solid-btn.blue:hover {
+  background-color: #2D87A5;
+}
+.solid-btn.red {
+  background-color: #bb3232;
+}
+.solid-btn.red:hover {
+  background-color: #A72727;
+}
+.solid-btn.green {
+  background-color: #32bb76;
+}
+.solid-btn.green:hover {
+  background-color: #2BA768;
+}
+/* End buttons */
+/* Inputs */
+.solid-input {
+  border: 0;
+  border-bottom: 3px solid #eee;
+  padding: 10px 5px;
+  width: 100%;
+  background: transparent;
+  margin: 8px 0;
+  outline: none;
+}
+/* End Inputs */
+/* uiSwitch */
+.switch {
+  /* frame */
+  height: 20px;
+  width: 45px;
+  border-radius: 0;
+  margin: 8px 4px;
+  background-color: #EEEEEE;
+}
+.switch small {
+  border-radius: 0;
+  height: 20px;
+  width: 23px;
+  /* button */
+}
+.switch.checked {
+  border-radius: 0;
+  /* frame when enabled */
+}
+.switch.checked small {
+  border-radius: 0;
+  /* button when enabled */
+}
+.switch.grey.checked {
+  background-color: #bababa;
+  border-color: #bababa;
+}
+.switch.blue.checked {
+  background-color: #3299bb;
+  border-color: #3299bb;
+}
+.switch.red.checked {
+  background-color: #bb3232;
+  border-color: #bb3232;
+}
+.switch.green.checked {
+  background-color: #32bb76;
+  border-color: #32bb76;
+}
+/* End uiSwitch */
+/* Response texts */
+.red-text,
+.yellow-text,
+.green-text {
+  font-weight: normal;
+}
+.red-text {
+  color: #bb3232;
+}
+.yellow-text {
+  color: #DEB835;
+}
+.green-text {
+  color: #32bb76;
+}
+/* End Response texts */
+/* Table */
+.table {
+  color: #424242;
+  border-bottom-width: 1px;
+  border-color: #e1e1e1!important;
+}
+td,
+th {
+  border-color: #e1e1e1!important;
+  padding: 13px 15px !important;
+}
+.table thead {
+  background-color: #FAFAFA;
+  color: #757575;
+}
+.table th {
+  border-bottom-width: 1px!important;
+}
+.table tbody {
+  background-color: #fff;
+}
+/* End Table */
+/*==========  Mobile First Method  ==========*/
+/* Custom, iPhone Retina */
+@media only screen and (max-width: 319px) {}
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 479px) {}
+/* Small Devices, Tablets */
+@media only screen and (max-width: 767px) {
+  .main-content {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 991px) {}
+/* Large Devices, Wide Screens */
+@media only screen and (max-width: 1199px) {}
+@media only screen and (min-width: 992px) {
+  .main-content {
+    padding-left: 290px;
+  }
+}
