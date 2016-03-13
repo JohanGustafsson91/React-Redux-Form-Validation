@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
+var moment = require('moment');
 
 // Import form actions
 import {
   FORM_INPUT,
   SHOW_ERRORS,
-  REGISTRATION_FORM,
-  SUBMIT_REGISTRATION_FORM,
-  ANOTHER_FORM
+  SET_FORM,
+  RESET_FORM
 } from '../actions/forms';
 
 // Import forms
@@ -16,14 +16,14 @@ import {
 } from '../utils/initialForms';
 
 /**
- * Initial state with all forms in application
- * included.
+ * Initial state with all forms in application included.
  */
 const inititalState = {
-  "registrationForm": registrationForm,
-  "anotherForm": anotherForm
+  [registrationForm.formName]: registrationForm,
+  [anotherForm.formName]: anotherForm,
+  changedForm: '',
+  objectId: ''
 };
-
 
 /**
  * Return the index for the field in the form
@@ -82,16 +82,15 @@ export function updateFormFields (newForm, newFieldIndex, newField) {
  * @author Johan Gustafsson <johan.gustafsson@solidio.se>
  */
 export function validateInput (formField, value) {
-
   // Validate required field
   if (formField.required) {
     if (validateRequiredField(value) === false) {
-      return 'You must enter a value';
+      return 'Du måste ange ett värde';
     }
   }
 
   // Validate regular expressions
-  if (value.length) {
+  if (value.length && formField.regex) {
     let regexError = validateRegularExpressions(formField.regex, value);
     if (regexError !== true) {
       return regexError;
@@ -108,10 +107,16 @@ export function validateInput (formField, value) {
  * @author Johan Gustafsson <johan.gustafsson@solidio.se>
  */
 export function validateRequiredField (value) {
-  if (value.length === 0) {
+  if (value) {
+    if (value.length === 0) {
+      return false;
+    }
+  } else {
+    // No value
     return false;
   }
-   return true;
+
+  return true;
 }
 
 /**
@@ -131,69 +136,168 @@ export function validateRegularExpressions (regex, value) {
 }
 
 /**
+ * @param  {[array]} fields [input fields in form]
+ * @return {[object]}        [{name: value}]
+ *
+ * @author Johan Gustafsson <johan.gustafsson@solidio.se>
+ */
+export function getValuesFromForm (fields) {
+  let values = {};
+
+  for (var i = 0; i < fields.length; i++) {
+    if (fields[i].type === 'select') {
+      // Select box with object
+      values[fields[i].name] = fields[i].value.id;
+    } else if (fields[i].type === 'date') {
+      // Datepicker input
+      values[fields[i].name] = fields[i].value._d;
+    } else {
+      // Textinput
+      values[fields[i].name] = fields[i].value;
+    }
+  }
+
+  return values;
+}
+
+/**
+ * Set form with values
+ *
+ * @param  {[object]} form   [form]
+ * @param  {[object]} values [values]
+ *
+ * @author Johan Gustafsson <johan.gustafsson@solidio.se>
+ */
+export function setForm (form, values) {
+  for (var i = 0; i < form.fields.length; i++) {
+    if (form.fields[i].type === 'date') {
+      // Date
+      form.fields[i].value = moment(
+        values[form.fields[i].name]
+      );
+    } else {
+      // Textinput
+      form.fields[i].value = values[form.fields[i].name];
+    }
+
+    form.fields[i].errorMessage = '';
+    form.fields[i].isValid = true;
+  }
+
+  form.validForm = true;
+  return form;
+}
+
+/**
+ * Reset form to initial values.
+ *
+ * @param  {[object]} form [form]
+ *
+ * @author Johan Gustafsson <johan.gustafsson@solidio.se>
+ */
+export function resetForm (form) {
+  for (var i = 0; i < form.fields.length; i++) {
+    if (form.fields[i].type === 'date') {
+      // Date
+      form.fields[i].value = null;
+    } else {
+      // Textinput
+      form.fields[i].value = '';
+    }
+
+    form.fields[i].errorMessage = '';
+  }
+
+  form.validForm = false;
+  return form;
+}
+
+/**
  * Handle forms reducer
  *
  * @author Johan Gustafsson <johan.gustafsson@solidio.se>
  */
-export function handleForm (
-  state = inititalState, action
-) {
-
+export function handleForm (state = inititalState, action) {
   switch (action.type) {
 
     case FORM_INPUT: {
-
       // Get changed form and field
-      let changedForm = Object.assign({}, state[action.form]);
-      let fieldIndex = getFormFieldIndex(changedForm.fields, action.field);
+      let updatedForm = Object.assign({}, state[action.form]);
+      let fieldIndex = getFormFieldIndex(updatedForm.fields, action.field);
 
       // Validate input in changed field
       let inputError = validateInput(
-        changedForm.fields[fieldIndex],
+        updatedForm.fields[fieldIndex],
         action.newValue
       );
 
       // Update changed input field
-      var newField = Object.assign({}, changedForm.fields[fieldIndex], {
+      var newField = Object.assign({}, updatedForm.fields[fieldIndex], {
         value: action.newValue,
         errorMessage: action.validateNow ? inputError : '',
-        isValid: inputError.length === 0 ? true : false
+        isValid: inputError.length === 0
       });
 
       // Update the form
-      let updatedForm = updateFormFields(changedForm, fieldIndex, newField);
+      updatedForm = updateFormFields(updatedForm, fieldIndex, newField);
 
       return Object.assign({}, state, {
-        [action.form]: updatedForm
+        [action.form]: updatedForm,
+        changedForm: `${action.form}`,
+        objectId: _.uniqueId(`${action.form}ObjId_`)
+      });
+    }
+
+    case SET_FORM: {
+      // Copy form and set values
+      let copyOfForm = Object.assign({}, action.form);
+      let populatedForm = setForm(copyOfForm, action.values);
+
+      return Object.assign({}, state, {
+        [action.form.formName]: populatedForm,
+        changedForm: `${action.form.formName}`,
+        objectId: _.uniqueId(`${action.form.formName}ObjId_`)
+      });
+    }
+
+    case RESET_FORM: {
+      // Copy and set form to init form
+      let copyOfForm = Object.assign({}, action.form);
+      let initForm = resetForm(copyOfForm);
+
+      return Object.assign({}, state, {
+        [action.form.formName]: initForm,
+        changedForm: `${action.form.formName}`,
+        objectId: _.uniqueId(`${action.form.formName}ObjId_`)
       });
     }
 
     case SHOW_ERRORS: {
-
       // Copy form
-      let changedForm = Object.assign({}, state[action.form]);
+      let errorForm = Object.assign({}, state[action.form]);
 
       // Go throw the form fields and get errors
-      for (var i = 0; i < changedForm.fields.length; i++) {
-
+      for (var i = 0; i < errorForm.fields.length; i++) {
         let error = validateInput(
-          changedForm.fields[i],
-          changedForm.fields[i].value
+          errorForm.fields[i],
+          errorForm.fields[i].value
         );
 
-        changedForm.fields[i].errorMessage = error;
-        changedForm.fields[i].isValid = error.length === 0 ? true : false;
+        errorForm.fields[i].errorMessage = error;
+        errorForm.fields[i].isValid = error.length === 0;
       }
 
       // Update form
       let formWithErrors = {
-        formName: [action.form],
+        formName: action.form,
         validForm: false,
-        fields: changedForm.fields
+        fields: errorForm.fields
       };
 
       return Object.assign({}, state, {
-        [action.form]: formWithErrors
+        [action.form]: formWithErrors,
+        changedForm: action.form,
+        objectId: _.uniqueId(`${action.form}ObjId_`)
       });
     }
 

@@ -23,7 +23,7 @@ export const registrationForm = {
       regex: [
         {
           pattern: /^[a-zA-ZåäöÅÄÖ ]*$/,
-          message: 'Name can only contain letters',
+          message: 'Name can only contain letters'
         }
       ],
       isValid: false
@@ -40,7 +40,7 @@ export const registrationForm = {
       regex: [
         {
           pattern: /0([-\s]?\d){6,10}/,
-          message: 'You must enter a valid phone number',
+          message: 'You must enter a valid phone number'
         }
       ],
       isValid: true
@@ -57,27 +57,21 @@ export const registrationForm = {
       regex: [
         {
           pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-          message: 'You must enter a valid email',
+          message: 'You must enter a valid email'
         }
       ],
       isValid: false
     },
     {
-      type: 'text',
-      name: 'ssn',
-      label: 'Social Security Number',
-      placeholder: 'Enter your social security number (yyyymmdd-xxxx)',
-      value: '',
+      type: 'date',
+      name: 'birth',
+      label: 'Birth',
+      placeholder: 'Birth',
+      value: null,
       errorMessage: '',
-      validateOnBlur: true,
-      required: false,
-      regex: [
-        {
-          pattern: /^\d{6,8}[-|(\s)]{0,1}\d{4}$/,
-          message: 'You must valid social security number',
-        }
-      ],
-      isValid: true
+      validateOnBlur: false,
+      required: true,
+      isValid: false
     }
   ]
 };
@@ -97,27 +91,21 @@ export const anotherForm = {
       regex: [
         {
           pattern: /^[a-zA-ZåäöÅÄÖ]*$/,
-          message: 'Surname can only contain letters',
+          message: 'Surname can only contain letters'
         }
       ],
       isValid: false
     },
     {
-      type: 'text',
-      name: 'favorite_number',
-      label: 'Favorite number',
-      placeholder: 'Enter your favorite number',
+      type: 'textarea',
+      name: 'description',
+      label: 'Description',
+      placeholder: 'Description',
       value: '',
       errorMessage: '',
       validateOnBlur: false,
       required: false,
-      regex: [
-        {
-          pattern: /([-\s]?\d){1,10}/,
-          message: 'You must enter a valid number',
-        }
-      ],
-      isValid: true
-    },
+      isValid: false
+    }
   ]
 };

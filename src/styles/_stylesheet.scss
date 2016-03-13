@@ -13,6 +13,55 @@
   background-color: #fff;
   padding-top: 20%;
 }
+
+/* Inputs */
+.solid-input {
+  border: 0;
+  border-bottom: 2px solid #eee;
+  padding: 5px;
+  width: 100%;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  outline: none;
+}
+
+.solid-input-textarea {
+  border: 0;
+  border-bottom: 2px solid #eee;
+  padding: 5px;
+  width: 100%;
+  margin: 0;
+  outline: none;
+  min-height: 36px;
+  resize: none !important;
+}
+
+/* Datepicker clear icon hidden */
+.close-icon {
+  display: none;
+}
+.datepicker__input:focus {
+  outline: none;
+  border-color: #eee;
+  box-shadow: none;
+}
+.datepicker__input {
+  position: relative;
+  font-size: 14px;
+  border: 0;
+  border-bottom: 2px solid #eee;
+  padding: 5px;
+  width: 100%;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  outline: none;
+  line-height: 24px;
+}
+
 /* Loading cube for page loading
 https://github.com/tobiasahlin/SpinKit
 */
@@ -268,16 +317,7 @@ h3 {
   background-color: #2BA768;
 }
 /* End buttons */
-/* Inputs */
-.solid-input {
-  border: 0;
-  border-bottom: 3px solid #eee;
-  padding: 10px 5px;
-  width: 100%;
-  background: transparent;
-  margin: 8px 0;
-  outline: none;
-}
+
 /* End Inputs */
 /* uiSwitch */
 .switch {

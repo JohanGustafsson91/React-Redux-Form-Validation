@@ -1,13 +1,19 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { routeActions } from 'react-router-redux';
-import { logoutAndRedirect } from '../redux/actions/authentication';
 import '../../node_modules/font-awesome/scss/font-awesome.scss';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../node_modules/react-select/dist/react-select.css';
+import '../../node_modules/react-datepicker/dist/react-datepicker.css';
 import '../styles/_stylesheet.scss';
 import Menu from '../components/menu/Menu';
 
 const App = React.createClass({
+
+  propTypes: {
+    dispatch: PropTypes.func,
+    children: PropTypes.object
+  },
 
   /**
    * Specify the different types of menu items
@@ -18,13 +24,10 @@ const App = React.createClass({
   getInitialState () {
     return {
       guestMenuItems: [
-        {name: 'Home', handler: this._redirectTo, url: '/'},
-        {name: 'Login', handler: this._redirectTo, url: '/login'},
+        {name: 'Home', handler: this._redirectTo, url: '/'}
       ],
       authMenuItems: [
-        {name: 'Home', handler: this._redirectTo, url: '/'},
-        {name: 'Profile', handler: this._redirectTo, url: '/profile'},
-        {name: 'Logout', handler: this._logout, url: null}
+        {name: 'Home', handler: this._redirectTo, url: '/'}
       ]
     };
   },
@@ -34,7 +37,6 @@ const App = React.createClass({
    * @author Johan Gustafsson <johan.gustafsson@solidio.se>
    */
   _getMenu () {
-
     // Get specifik menu options
     let menuItems = this._getMenuItems();
     let menuBrand = this._getMenuBrand();
@@ -51,12 +53,7 @@ const App = React.createClass({
    * @author Johan Gustafsson <johan.gustafsson@solidio.se>
    */
   _getMenuItems () {
-    if (this.props.isAuthenticated) {
-      return this.state.authMenuItems;
-
-    } else {
-      return this.state.guestMenuItems;
-    }
+    return this.state.guestMenuItems;
   },
 
   /**
@@ -64,20 +61,11 @@ const App = React.createClass({
    * @author Johan Gustafsson <johan.gustafsson@solidio.se>
    */
   _getMenuBrand () {
-    if (this.props.isAuthenticated) {
-      return {
-        name: 'Welcome ' + this.props.name,
-        handler: this._redirectTo,
-        url: '/profile'
-      };
-
-    } else {
-      return {
-        name: 'Welcome guest',
-        handler: this._redirectTo,
-        url: '/'
-      };
-    }
+    return {
+      name: 'Welcome guest',
+      handler: this._redirectTo,
+      url: '/'
+    };
   },
 
   /**
@@ -90,24 +78,15 @@ const App = React.createClass({
     );
   },
 
-  /**
-   * @author Johan Gustafsson <johan.gustafsson@solidio.se>
-   */
-  _logout () {
-    this.props.dispatch(
-      logoutAndRedirect()
-    );
-  },
-
   render () {
     return (
       <div>
         {
           this._getMenu()
         }
-        <div className='container'>
-          <div className='row'>
-            <div className='col-xs-12'>
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-12">
               {this.props.children}
             </div>
           </div>
@@ -117,16 +96,4 @@ const App = React.createClass({
   }
 });
 
-App.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  name: PropTypes.string,
-  dispatch: PropTypes.func,
-  children: PropTypes.object
-};
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  name: state.auth.name
-});
-
-export default connect(mapStateToProps)(App);
+export default connect()(App);
