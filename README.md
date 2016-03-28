@@ -46,7 +46,7 @@ export const registrationForm = {
     ...
 ```
 
-**Import forms from initialForms in src/redux/utils/initialForms and add the t inititalState ***
+**Import forms from initialForms in src/redux/utils/initialForms and add to the inititalState**
 ```
 // Import forms
 import {
@@ -134,7 +134,7 @@ let form = this.props.form.fields.map((f) => {
 **Dispatch actions**
 
 | Action | Parameters | Description |
-| --- | --- |
+| --- | --- | --- |
 | formInput() | form object, keyName (field), new value, validateNow (true if validate now, else false for blur) | Dispatch on change for form elements |
 | showErrors() | form name | Show all form errors (if user clicks submit with untouched fields etc.) |
 | resetForm() | form object | Clear and set form to default values |
