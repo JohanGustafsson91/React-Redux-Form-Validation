@@ -9,13 +9,13 @@ Redux form validation
 
 ## Instructions
 
-*** Specify form names in src/redux/actions/forms ***
+**Specify form names in src/redux/actions/forms**
 ```
 // Constants for forms named as forms in initialForms
 export const REGISTRATION_FORM = 'registrationForm';
 export const ANOTHER_FORM = 'anotherForm';
 ```
-*** Import them and specify form rules in src/redux/utils/initialForms ***
+**Import them and specify form rules in src/redux/utils/initialForms**
 ```
 import {
   REGISTRATION_FORM,
@@ -46,7 +46,7 @@ export const registrationForm = {
     ...
 ```
 
-*** Import forms from initialForms in src/redux/utils/initialForms and add them to inititalState ***
+**Import forms from initialForms in src/redux/utils/initialForms and add the t inititalState ***
 ```
 // Import forms
 import {
@@ -66,7 +66,7 @@ const inititalState = {
 ```
 *"changedForm" and "objectId" are variables to see which form that has been changed and to optimize components with shouldComponentUpdate()*
 
-*** Connect view/component with redux ***
+**Connect view/component with redux**
 ```
 ...
 
@@ -80,7 +80,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(HomeView);
 ```
 
-*** Render form in component ***
+**Render form in component**
 ```
 /**
  * Render all form fields in the form.
@@ -131,7 +131,7 @@ let form = this.props.form.fields.map((f) => {
     ...
 ```
 
-*** Dispatch actions ***
+**Dispatch actions**
 
 | Action | Parameters | Description |
 | --- | --- |
