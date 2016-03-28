@@ -85,7 +85,7 @@ export function validateInput (formField, value) {
   // Validate required field
   if (formField.required) {
     if (validateRequiredField(value) === false) {
-      return 'Du måste ange ett värde';
+      return 'You must enter a value';
     }
   }
 
